@@ -13,7 +13,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__)).replace('\MsSQLGenerate',
 xlsx = pd.ExcelFile(dir_path+'/files/manualinput.xlsx')
 df_colunas = pd.read_excel(xlsx, 'colunas')
 
-f = open(dir_path + "/filesgenerated/MSSQL/INSERT_ABI_DATA_DICT.hql", "w+")
+f = open(dir_path + "/filesgenerated/MSSQL/INSERT_ABI_DATA_DICT.sql", "w+")
 
 insert_sql = "INSERT INTO IngestionDB.dbo.ABI_DATA_DICT" \
              " (Data_Subject_CD, Data_Lake_Object, Column_Name, Column_Data_Type, Column_Precision, Column_Key, Column_Nullable, Column_Order)" \

@@ -13,7 +13,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__)).replace('\MsSQLGenerate',
 xlsx = pd.ExcelFile(dir_path+'/files/manualinput.xlsx')
 df_tabelas = pd.read_excel(xlsx, 'tabelas')
 
-f = open(dir_path + "/filesgenerated/MSSQL/DELETE_ABI_DATA_DICT.hql", "w+")
+f = open(dir_path + "/filesgenerated/MSSQL/DELETE_ABI_DATA_DICT.sql", "w+")
 
 insert_sql = "DELETE FROM IngestionDB.dbo.ABI_DATA_DICT" \
              " where Data_Lake_Object IN {} ;"
