@@ -5,7 +5,7 @@ comand_create_table = \
     "{}" \
     ")" \
     "ROW FORMAT DELIMITED" \
-    " FIELDS TERMINATED BY '\\073' " \
+    " FIELDS TERMINATED BY '\\043' " \
     " STORED AS INPUTFORMAT" \
     " 'org.apache.hadoop.mapred.TextInputFormat'" \
     " OUTPUTFORMAT" \
@@ -13,7 +13,6 @@ comand_create_table = \
     " LOCATION" \
     " 'adl://edhdatalakestorewe.azuredatalakestore.net{}'" \
     " TBLPROPERTIES (" \
-    " 'skip.header.line.count'='1'," \
     " 'last_modified_by'='haadmin'," \
     " 'last_modified_time'='1532031952'," \
     " 'numFiles'='10'," \

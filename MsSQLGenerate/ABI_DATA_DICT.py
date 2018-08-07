@@ -2,8 +2,6 @@
 
 import pandas as pd
 
-import controllers.operationDF as op
-import modelscript.hqlFile as chql
 
 import os
 dir_path = os.path.dirname(os.path.realpath(__file__)).replace('\MsSQLGenerate','')

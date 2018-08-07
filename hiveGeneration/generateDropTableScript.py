@@ -5,7 +5,7 @@ import modelscript.hiveScriptUtil as su
 
 
 import os
-dir_path = os.path.dirname(os.path.realpath(__file__))
+dir_path = os.path.dirname(os.path.realpath(__file__)).replace('\hiveGeneration','')
 
 
 xlsx = pd.ExcelFile(dir_path+'/files/manualinput.xlsx')

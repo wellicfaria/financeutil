@@ -1,42 +1,25 @@
-from openpyxl import load_workbook
-wb = load_workbook(filename='Ingestion_Tables2.xlsx', read_only=True)
-ws = wb['ABI_CZ_LOAD_CTL2']
-
-insert_molde =  "INSERT INTO IngestionDB.dbo.ABI_CZ_LOAD_CTL \
-(Data_Subject_CD, Source_Data_Lake_Object, Target_Data_Lake_Object, Src_Sys_Id, Source_Type, Load_Type_Code, Error_Object, Source_Temp_Object, Target_Temp_Object, Source_File_Location, Target_File_Location, Executable_Location, Source_File_Archive_Location, Temporary_Location, Rejected_File_Location, Rejected_Record_Location) \
-VALUES('{}', '{}', '{}', {}, '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}');"
 
 
-file = open("ABI_CZ_LOAD_CTL.sql","w") 
+import pandas as pd
 
-i = 0
-for row in ws.rows:
-    if i>0:
-        comando_sql = insert_molde.format(
-            row[0].value,
-            row[1].value,
-            row[2].value,
-            row[3].value,
-            row[4].value,
-            row[5].value,
-            row[6].value,
-            row[7].value,
-            row[8].value,
-            row[9].value,
-            row[10].value,
-            row[11].value,
-            row[12].value,
-            row[13].value,
-            row[14].value,
-            row[15].value
-            ).replace("'None'", "NULL").replace("None", "NULL")
-        file.write(comando_sql)
-        file.write('\n')
-    i+=1
-    
-file.close()
-print("Processo Finalizado, foram escritos {} linhas no arquivo.".format(i))
+
+import os
+dir_path = os.path.dirname(os.path.realpath(__file__)).replace('\MsSQLGenerate','')
 
 
 
-    
+xlsx = pd.ExcelFile(dir_path+'/files/manualinput.xlsx')
+df_tabelas = pd.read_excel(xlsx, 'tabelas')
+
+f = open(dir_path + "/filesgenerated/MSSQL/INSERT_CZ_LOAD_CTL.sql", "w+")
+
+insert_sql = "INSERT INTO IngestionDB.dbo.ABI_CZ_LOAD_CTL" \
+             "(Data_Subject_CD, Source_Data_Lake_Object, Target_Data_Lake_Object, Src_Sys_Id, Source_Type, Load_Type_Code, Error_Object, Source_Temp_Object, Target_Temp_Object, Source_File_Location, Target_File_Location, Executable_Location, Source_File_Archive_Location, Temporary_Location, Rejected_File_Location, Rejected_Record_Location)" \
+             "VALUES('{}', '{}', '{}', {}, '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}');"
+
+for index, row in df_tabelas.iterrows():
+    c = insert_sql.format(row['Data_Subject_CD'],row['Source_Data_Lake_Object'],row['Target_Data_Lake_Object'],row['Source_System_ID'],row['Source_Type'],row['Load_Type_Code'],row['Error_Object'],row['Source_Temp_Object'],row['Target_Temp_Object'],row['Source_File_Location'],row['Target_File_Location'],row['Executable_Location'],row['Source_File_Archive_Location'],row['Temporary_Location'],row['Rejected_File_Location'],row['Rejected_Record_Location']).\
+        replace("'nan'",'NULL').replace('.0','').replace('nan,','NULL,')
+    f.write("\n"+c)
+
+f.close()

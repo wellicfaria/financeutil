@@ -1,5 +1,5 @@
 
-
+#PEGA PARA CRIAR O COMANDO HIVE, NAO USA PARA O MSSQL
 def getcolunasTabela(df_colunas,name_table):
 
     df = df_colunas.loc[df_colunas['Data_Lake_Object']==name_table]
@@ -9,7 +9,7 @@ def getcolunasTabela(df_colunas,name_table):
 
     resp = ""
     for i in range(0,len(colunas)):
-       aux = " {} {},".format(colunas[i],tipos_colunas[i].replace('long','bigint'))
+       aux = " {} {},".format(colunas[i],tipos_colunas[i].replace('long','bigint').replace('date','string'))
        resp+=aux
 
     return resp[0:-1]
